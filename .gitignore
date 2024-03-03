@@ -3,3 +3,6 @@
 # Rust
 Cargo.lock
 target/
+# executables
+program
+*.exe
