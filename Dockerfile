@@ -7,6 +7,6 @@ RUN apt-get -y upgrade
 RUN apt-get install gnat -y
 RUN apt-get install golang -y
 RUN apt-get install ghc ghc-prof ghc-doc -y
-RUN sudo apt-get install swi-prolog -y
+RUN apt-get install swi-prolog -y
 
 COPY . .
