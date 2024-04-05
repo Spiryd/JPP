@@ -1,9 +1,10 @@
-
-pub fn factorial_iter(n: u64) -> u64 {
+#[no_mangle]
+pub extern "C" fn factorial_iter(n: u64) -> u64 {
     (1..=n).product()
 }
 
-pub fn factorial_recursive(n: u64) -> u64 {
+#[no_mangle]
+pub extern "C" fn factorial_recursive(n: u64) -> u64 {
     if n == 0 {
         1
     } else {
@@ -11,7 +12,8 @@ pub fn factorial_recursive(n: u64) -> u64 {
     }
 }
 
-pub fn gcd_iter(n: u64, k: u64) -> u64 {
+#[no_mangle]
+pub extern "C" fn gcd_iter(n: u64, k: u64) -> u64 {
     let mut n = n;
     let mut k = k;
     while n != k {
@@ -24,7 +26,8 @@ pub fn gcd_iter(n: u64, k: u64) -> u64 {
     n   
 }
 
-pub fn gcd_recursive(n: u64, k: u64) -> u64 {
+#[no_mangle]
+pub extern "C" fn gcd_recursive(n: u64, k: u64) -> u64 {
     if k == 0 {
         n
     } else {
@@ -32,7 +35,14 @@ pub fn gcd_recursive(n: u64, k: u64) -> u64 {
     }
 }
 
-pub fn diophantine_iter(a: i64, b: i64, c: i64) -> (i64, i64) {
+#[repr(C)]
+pub struct DiophantineSolution {
+    pub x: i64,
+    pub y: i64,
+}
+
+#[no_mangle]
+pub extern "C" fn diophantine_iter(a: i64, b: i64, c: i64) -> DiophantineSolution {
     let mut x = 0;
     let mut y = 0;
     while x < c {
@@ -42,24 +52,26 @@ pub fn diophantine_iter(a: i64, b: i64, c: i64) -> (i64, i64) {
         }
         x += 1;
     }
-    (x, y)
+    DiophantineSolution { x, y }
 }
 
-pub fn diophantine_recursive(a: i64, b: i64, c: i64) -> (i64, i64) {
+#[no_mangle]
+pub extern "C" fn diophantine_recursive(a: i64, b: i64, c: i64) -> DiophantineSolution {
     if c == 0 {
-        (0, 0)
+        DiophantineSolution { x: 0, y: 0 }
     } else if a == 0 && b == 0 {
-        (0, 0)
+        DiophantineSolution { x: 0, y: 0 }
     } else if a == 0 {
-        (0, c / b)
+        DiophantineSolution { x: 0, y: c / b }
     } else if b == 0 {
-        (c / a, 0)
+        DiophantineSolution { x: c / a, y: 0 }
     } else {
-        let (x, y) = diophantine_recursive(b, a % b, c);
-        (y, x - (a / b) * y)
+        let s = diophantine_recursive(b, a % b, c);
+        let x = s.x;
+        let y = s.y;
+        DiophantineSolution { x: y, y: x - (a / b) * y }
     }
 }
-
 
 #[cfg(test)]
 mod tester {
@@ -81,12 +93,16 @@ mod tester {
     }
     #[test]
     fn test_diophantine_iter() {
-        let (x, y) = super::diophantine_iter(2, 3, 7);
+        let s = super::diophantine_iter(2, 3, 7);
+        let x = s.x;
+        let y = s.y;
         assert_eq!(2*x + 3*y, 7);
     }
     #[test]
     fn test_diophantine_recursive() {
-        let (x, y) = super::diophantine_recursive(2, 3, 7);
+        let s = super::diophantine_iter(2, 3, 7);
+        let x = s.x;
+        let y = s.y;
         assert_eq!(2*x + 3*y, 7);
     }
 }
