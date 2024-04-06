@@ -1,0 +1,8 @@
+with "../ada_implementation/Ada_Lib_Prj";
+project Test_Ada_Wrapper_Prj is
+	for Source_Dirs use (".");
+	for Languages use ("c");
+	for Main use("test.c");
+	for Exec_Dir use ".";
+	for Object_Dir use "build";
+end Test_Ada_Wrapper_Prj;
