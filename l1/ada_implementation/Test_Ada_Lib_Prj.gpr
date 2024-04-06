@@ -1,0 +1,8 @@
+with "Ada_Lib_Prj";
+project Test_Ada_Lib_Prj is
+   for Source_Dirs use ("test");
+   for Object_Dir use "test/build";
+   for Main use ("test.adb");
+   for Languages use ("Ada");
+   for Library_Name use "Test_Ada_Lib_Prj";
+end Test_Ada_Lib_Prj;
