@@ -6,3 +6,9 @@ target/
 # executables
 program
 *.exe
+
+# Ada
+build/
+*.ali
+*.dll
+l1/ada_implementation/include/ada_lib.ads
