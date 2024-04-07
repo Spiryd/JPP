@@ -12,3 +12,9 @@ build/
 *.ali
 *.dll
 l1/ada_implementation/include/ada_lib.ads
+l1/ada_from_c/src/*
+!l1/ada_from_c/src/lib.c
+!l1/ada_from_c/src/lib.h
+!l1/ada_from_c/src/test_lib.adb
+!l1/ada_from_c/src/test.adb
+!l1/ada_from_c/src/test_lib.ads
