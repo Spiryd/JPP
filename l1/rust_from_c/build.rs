@@ -1,5 +1,5 @@
 fn main() {
     cc::Build::new()
-        .file("../c_implementation/rec.c")
+        .file("../c_implementation/iter.c")
         .compile("iter");
 }
