@@ -45,6 +45,9 @@ int main()
         c = 12;
         exp_out.x = -1;
         exp_out.y =  1;
+        struct int64_pair result = RLDES(a, b, c);
+        printf("result.x = %ld\n", result.x);
+        printf("result.y = %ld\n", result.y);
         cmpPairs(RLDES(a, b, c), exp_out);
 
         a = 91;
@@ -52,6 +55,9 @@ int main()
         c = 7;
         exp_out.x =  2;
         exp_out.y = -5;
+        struct int64_pair result2 = RLDES(a, b, c);
+        printf("result2.x = %ld\n", result2.x);
+        printf("result2.y = %ld\n", result2.y);
         cmpPairs(RLDES(a, b, c), exp_out);
 
 
@@ -62,6 +68,9 @@ int main()
         c = 12;
         exp_out.x = -1;
         exp_out.y =  1;
+        struct int64_pair result3 = ILDES(a, b, c);
+        printf("result3.x = %ld\n", result3.x);
+        printf("result3.y = %ld\n", result3.y);
         cmpPairs(ILDES(a, b, c), exp_out);
 
         a = 91;

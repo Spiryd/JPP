@@ -5,7 +5,8 @@ package Ada_Lib is
 
    type Int64_Pair is record
       X, Y : Int64;
-   end record;
+   end record
+      with Convention => C;
    
    function IFactor(N : UInt16) return UInt64
       with
