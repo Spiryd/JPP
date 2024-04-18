@@ -45,17 +45,19 @@ fn power_of_prime(n: usize) -> Result<(usize, usize), ()> {
 #[derive(Clone, Copy, Debug)]
 pub struct Gf {
     value: u64,
-}
+    characteristic: u64,
+}   
 
 impl Gf {
     pub fn new(value: u64) -> Self {
-        Self { value: value % ORDER}
+        let characteristic = power_of_prime(ORDER as usize).expect("SHOULD NOT EXIST").0 as u64;
+        Self { value: value % ORDER, characteristic}
     }
     pub fn value(&self) -> u64 {
         self.value
     }
     pub fn characteristic(&self) -> u64 {
-        power_of_prime(ORDER as usize).expect("SHOULD NOT EXIST").0 as u64
+        self.characteristic
     }
     fn inv(&self) -> Self {
         let mut t = 0;
@@ -108,6 +110,7 @@ impl std::ops::Add for Gf {
     fn add(self, other: Self) -> Self {
         Self {
             value: (self.value + other.value) % ORDER,
+            characteristic: self.characteristic
         }
     }
 }
@@ -126,6 +129,7 @@ impl std::ops::Sub for Gf {
     fn sub(self, other: Self) -> Self {
         Self {
             value: (self.value + ORDER - other.value) % ORDER,
+            characteristic: self.characteristic
         }
     }
 }
@@ -144,6 +148,7 @@ impl std::ops::Mul for Gf {
     fn mul(self, other: Self) -> Self {
         Self {
             value: (self.value * other.value) % ORDER,
+            characteristic: self.characteristic
         }
     }
 }
