@@ -5,7 +5,7 @@
 
 constexpr unsigned long long ORDER = 1234577;
 
-std::vector<bool> sieve_of_eratosthenes(int n) {
+std::vector<int> sieve_of_eratosthenes(int n) {
     std::vector<bool> is_prime(n + 1, true);
     is_prime[0] = false;
     is_prime[1] = false;
@@ -20,7 +20,14 @@ std::vector<bool> sieve_of_eratosthenes(int n) {
         }
         p += 1;
     }
-    return is_prime;
+
+    std::vector<int> primes;
+    for (int i = 0; i <= n; ++i) {
+        if (is_prime[i]) {
+            primes.push_back(i);
+        }
+    }
+    return primes;
 }
 
 std::pair<int, int> power_of_prime(int n) {
@@ -149,6 +156,7 @@ int main() {
     Gf a(1234560);
     Gf b(10);
     Gf c = a + b;
+    std::cout << a.characteristic() << std::endl;
     std::cout << c.getValue() << std::endl;
     c = a - b;
     std::cout << c.getValue() << std::endl;
