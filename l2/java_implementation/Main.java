@@ -31,7 +31,7 @@ class Gf {
         return primePower[0];
     }
 
-    public Gf inv() {
+    private Gf inv() {
         long t = 0;
         long newt = 1;
         long r = ORDER;
