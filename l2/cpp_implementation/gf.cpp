@@ -52,18 +52,6 @@ class Gf {
 private:
     unsigned long long value;
 
-public:
-    Gf(unsigned long long value) : value(value % ORDER) {}
-
-    unsigned long long getValue() const {
-        return value;
-    }
-
-    unsigned long long characteristic() const {
-        auto [prime, _] = power_of_prime(static_cast<int>(ORDER));
-        return prime;
-    }
-
     Gf inv() const {
         long long t = 0;
         long long newt = 1;
@@ -87,6 +75,18 @@ public:
         return Gf(t);
     }
 
+public:
+    Gf(unsigned long long value) : value(value % ORDER) {}
+
+    unsigned long long getValue() const {
+        return value;
+    }
+
+    unsigned long long characteristic() const {
+        auto [prime, _] = power_of_prime(static_cast<int>(ORDER));
+        return prime;
+    }
+    
     friend bool operator==(const Gf& lhs, const Gf& rhs) {
         return lhs.value == rhs.value;
     }
