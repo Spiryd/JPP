@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use std::fmt::Debug;
 
 use rand::prelude::*;
