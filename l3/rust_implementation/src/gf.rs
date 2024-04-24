@@ -45,26 +45,24 @@ fn power_of_prime(n: usize) -> Result<(usize, usize), ()> {
 #[derive(Clone, Copy, Debug)]
 pub struct Gf {
     value: u64,
-    characteristic: u64,
 }   
 
 #[allow(dead_code)]
 impl Gf {
     pub fn new(value: u64) -> Self {
-        let characteristic = power_of_prime(ORDER as usize).expect("SHOULD NOT EXIST").0 as u64;
-        Self { value: value % ORDER, characteristic}
+        Self { value: value % ORDER}
     }
     pub fn value(&self) -> u64 {
         self.value
     }
     pub fn characteristic(&self) -> u64 {
-        self.characteristic
+        power_of_prime(ORDER as usize).expect("SHOULD NOT EXIST").0 as u64
     }
     fn inv(&self) -> Self {
         let mut t = 0;
         let mut newt = 1;
-        let mut r = ORDER as i64;
-        let mut newr = self.value as i64;
+        let mut r = ORDER as i128;
+        let mut newr = self.value as i128;
         while newr != 0 {
             let quotient = r / newr;
             let tmp = newt;
@@ -78,7 +76,7 @@ impl Gf {
             panic!("{} is not invertible", self.value);
         }
         if t < 0 {
-            t += ORDER as i64;
+            t += ORDER as i128;
         }
         Self::new(t as u64)
     }
@@ -109,10 +107,7 @@ impl std::ops::Add for Gf {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        Self {
-            value: (self.value + other.value) % ORDER,
-            characteristic: self.characteristic
-        }
+        Self::new(self.value + other.value)
     }
 }
 
@@ -128,10 +123,7 @@ impl std::ops::Sub for Gf {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        Self {
-            value: (self.value + ORDER - other.value) % ORDER,
-            characteristic: self.characteristic
-        }
+        Self::new(self.value + ORDER - other.value)
     }
 }
 
@@ -147,10 +139,7 @@ impl std::ops::Mul for Gf {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
-        Self {
-            value: (self.value * other.value) % ORDER,
-            characteristic: self.characteristic
-        }
+        Self::new(self.value * other.value)
     }
 }
 
