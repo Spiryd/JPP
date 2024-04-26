@@ -1,4 +1,4 @@
-const ORDER: u64 = 1234577;
+const ORDER: u64 = 1234567891;
 
 fn sieve_of_eratosthenes(n: usize) -> Vec<usize> {
     let mut is_prime = vec![true; n + 1];

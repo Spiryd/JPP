@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use rand::prelude::*;
 use rand_pcg::Pcg64;
-const CHARACTERISTIC: u64 = 1234577;
+const CHARACTERISTIC: u64 = 1234567891;
 
 pub trait AlgebraicBody: std::ops::Mul<Output = Self> + std::ops::Div<Output = Self> + Copy + Debug + std::ops::MulAssign + From<u64> {}
 impl<T: std::ops::Mul<Output = Self> + std::ops::Div<Output = Self> + Copy + Debug + std::ops::MulAssign + From<u64>> AlgebraicBody for T {}
