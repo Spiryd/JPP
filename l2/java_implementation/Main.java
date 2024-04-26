@@ -3,8 +3,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Gf a = new Gf(10);
-        Gf b = new Gf(5);
+        Gf a = new Gf(1234560);
+        Gf b = new Gf(10);
         System.out.println("a = " + a);
         System.out.println("b = " + b);
         System.out.println("a + b = " + a.add(b));

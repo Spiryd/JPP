@@ -49,9 +49,9 @@ pub struct Gf {
 }   
 
 impl Gf {
-    pub fn new(value: u64) -> Self {
+    pub fn new(value: i64) -> Self {
         let characteristic = power_of_prime(ORDER as usize).expect("SHOULD NOT EXIST").0 as u64;
-        Self { value: value % ORDER, characteristic}
+        Self { value: value.rem_euclid(ORDER as i64).try_into().unwrap(), characteristic}
     }
     pub fn value(&self) -> u64 {
         self.value
@@ -79,7 +79,7 @@ impl Gf {
         if t < 0 {
             t += ORDER as i64;
         }
-        Self::new(t as u64)
+        Self::new(t)
     }
 }
 

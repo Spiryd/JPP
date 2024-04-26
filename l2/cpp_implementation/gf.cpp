@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdexcept>
 
-constexpr unsigned long long ORDER = 1234577;
+const unsigned long long ORDER = 1234577;
 
 std::vector<int> sieve_of_eratosthenes(int n) {
     std::vector<bool> is_prime(n + 1, true);

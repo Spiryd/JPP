@@ -18,3 +18,4 @@ l1/ada_from_c/src/*
 !l1/ada_from_c/src/test_lib.adb
 !l1/ada_from_c/src/test.adb
 !l1/ada_from_c/src/test_lib.ads
+*.out
