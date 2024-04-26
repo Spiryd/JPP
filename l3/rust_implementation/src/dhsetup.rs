@@ -1,10 +1,11 @@
-#![allow(dead_code)]
+use std::fmt::Debug;
+
 use rand::prelude::*;
 use rand_pcg::Pcg64;
-const CHARACTERISTIC: u64 = 1234567891;
+const CHARACTERISTIC: u64 = 1234577;
 
-pub trait AlgebraicBody: std::ops::Mul + Copy + std::ops::MulAssign + From<u64> {}
-impl<T: std::ops::Mul + Copy + std::ops::MulAssign + From<u64>> AlgebraicBody for T {}
+pub trait AlgebraicBody: std::ops::Mul<Output = Self> + std::ops::Div<Output = Self> + Copy + Debug + std::ops::MulAssign + From<u64> {}
+impl<T: std::ops::Mul<Output = Self> + std::ops::Div<Output = Self> + Copy + Debug + std::ops::MulAssign + From<u64>> AlgebraicBody for T {}
 
 fn check(suspect: u64) -> bool {
     let mut i = 2;
@@ -20,64 +21,67 @@ fn check(suspect: u64) -> bool {
             i += 1;
         }
     }
-    if tmp > 1 {
-        if suspect.pow(((CHARACTERISTIC - 1) / tmp) as u32) == 1 {
-            return false;
-        }
+    if tmp > 1 && suspect.pow(((CHARACTERISTIC - 1) / tmp) as u32) == 1 {
+        return false;
     }
     true
 }
 
-pub struct DHSetup {
-    generator: u64,
+pub struct DHSetup<T: AlgebraicBody> {
+    generator: T,
 }
 
-impl DHSetup {
+impl<T: AlgebraicBody> DHSetup<T> {
     pub fn new() -> Self {
         let mut rng = Pcg64::from_entropy();
         let mut generator = rng.gen_range(1..CHARACTERISTIC);
         while !check(generator) {
             generator = rng.gen_range(1..CHARACTERISTIC);
         }
-        Self { generator }
+        Self { generator: T::from(generator) }
     }
-    pub fn get_generator(&self) -> u64 {
+    pub fn get_generator(&self) -> T {
         self.generator
     }
-    pub fn power<T: AlgebraicBody<Output = T>>(a: T, b: u32) -> T {
-        if b == 0 {
-            return T::from(1);
+    pub fn power(a: T, b: u64) -> T {
+        let mut a = a;
+        let mut b = b;
+        let mut res: T = T::from(1);
+        while b > 0 {
+            if b % 2 == 1 {
+                res = res * a;
+            }
+            a = a * a;
+            b /= 2;
         }
-        if b == 1 {
-            return a;
-        }
-        let tmp = Self::power(a, b / 2);
-        if b % 2 == 0 {
-            tmp * tmp
-        } else {
-            a * tmp * tmp
-        }
+        res
     }
 }
-pub struct User {
-
+pub struct User<'a, T: AlgebraicBody> {
+    secret: u64,
+    dhsetup: &'a DHSetup<T>,
+    key: Option<T>,
 }
 
-impl User {
-    pub fn new() -> Self {
-        Self {}
+impl<'a, T: AlgebraicBody> User<'a, T> {
+    pub fn new<'b: 'a>(dhsetup: &'b DHSetup<T>) -> Self {
+        let mut rng = Pcg64::from_entropy();
+        let secret = rng.gen();
+        println!("secret: {}", secret);
+        Self { secret, dhsetup, key: None}
     }
-    pub fn get_public_key(&self) -> u32 {
-        0
+    pub fn get_public_key(&self) -> T {
+       DHSetup::power(self.dhsetup.get_generator(), self.secret)
     }
-    pub fn set_key(&self, a: u32) {
-        todo!()
+    pub fn set_key(&mut self, a: T) {
+        self.key = Some(DHSetup::power(a, self.secret));
+        println!("key: {:?}", self.key);
     }
-    pub fn encrypt(&self, m: &str) -> String {
-        todo!()
+    pub fn encrypt(&self, m: T) -> T {
+        m * self.key.unwrap()
     }
-    pub fn decrypt(&self, c: &str) -> String {
-        todo!()
+    pub fn decrypt(&self, c: T) -> T {
+        c / self.key.unwrap()
     }
 }
 
@@ -91,11 +95,5 @@ mod tester {
         let a: Gf = Gf::from(2);
         let b = 10;
         assert_eq!(DHSetup::power(a, b).value(), 1024);
-    }
-
-    #[test]
-    fn dhetup_test() {
-        let dh = DHSetup::new();
-        assert_eq!(dh.get_generator(), 2);
     }
 }
