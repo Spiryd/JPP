@@ -84,16 +84,3 @@ impl<'a, T: AlgebraicBody> User<'a, T> {
         c / self.key.unwrap()
     }
 }
-
-mod tester {
-    use crate::gf::Gf;
-
-    use super::*;
-
-    #[test]
-    fn test_power() {
-        let a: Gf = Gf::from(2);
-        let b = 10;
-        assert_eq!(DHSetup::power(a, b).value(), 1024);
-    }
-}

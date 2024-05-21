@@ -35,7 +35,6 @@ public class Main {
     public static boolean check(long suspect) {
         long i = 2;
         long tmp = suspect;
-
         while (i * i <= tmp) {
             if (tmp % i == 0) {
                 if (BigInteger.valueOf(suspect).pow((int)((CHARACTERISTIC - 1) / i)).mod(BigInteger.valueOf(CHARACTERISTIC)).equals(BigInteger.ONE)) {

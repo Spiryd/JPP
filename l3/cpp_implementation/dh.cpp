@@ -4,8 +4,8 @@
 #include <cmath>
 #include <stdexcept>
 
-const long CHARACTERISTIC = 1234577;
-const long ORDER = 1234577;
+const long CHARACTERISTIC = 1234567891;
+const long ORDER = 1234567891;
 
 bool check(unsigned long suspect) {
     unsigned long i = 2;
