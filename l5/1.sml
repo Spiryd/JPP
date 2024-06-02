@@ -138,8 +138,8 @@ fun listToString xs = "[" ^ String.concatWith ", " (List.map Int.toString xs) ^ 
 
 fun main () =
     let
-        val _ = print (Int.toString (binomial 200 5) ^ "\n")
-        val _ = print (IntInf.toString (binomial2 200 5) ^ "\n")
+        val _ = print (Int.toString (binomial 4 2) ^ "\n")
+        val _ = print (IntInf.toString (binomial2 4 2) ^ "\n")
         val _ = print (listToString (mergesort [4, 3, 2, 1]) ^ "\n")
         val _ = print (case (de 35 15 5) of (x, y, z) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ", " ^ Int.toString z ^ ")\n")
         val _ = print (listToString (primeFactors 100) ^ "\n")
