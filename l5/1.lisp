@@ -9,11 +9,10 @@
 (defun next-row (row)
   (mapcar #'+ (append row '(0)) (append '(0) row)))
 
-(defun generate-pascal (n)
-  (let ((rows '((1))))
-    (loop for i from 1 to n do
-         (push (next-row (first rows)) rows))
-    (nreverse rows)))
+(defun generate-pascal (n &optional (rows '((1))))
+  (if (zerop n)
+      (nreverse rows)
+      (generate-pascal (1- n) (cons (next-row (first rows)) rows))))
 
 (defun binomial2 (n k)
   (nth k (nth n (generate-pascal n))))
@@ -64,7 +63,9 @@
 
 ;; subtask 6
 (defun number-sequence (start end)
-  (loop for i from start to end collect i))
+  (if (> start end)
+      nil
+      (cons start (number-sequence (1+ start) end))))
 
 (defun totient (n)
   (length (remove-if-not (lambda (x) (= (gcd x n) 1)) (number-sequence 1 n))))
