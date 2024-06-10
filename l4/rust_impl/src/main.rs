@@ -1,7 +1,7 @@
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-const NUM_PHILOSOPHERS: usize = 12;
+const NUM_PHILOSOPHERS: usize = 6;
 const MEALS_TO_EAT: usize = 3;
 
 struct Philosopher {
