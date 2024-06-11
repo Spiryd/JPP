@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	numPhilosophers = 12
+	numPhilosophers = 5
 	mealsToEat      = 3
 )
 

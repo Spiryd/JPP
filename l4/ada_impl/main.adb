@@ -22,7 +22,7 @@ procedure Test_Dining_Philosophers is
       end Put_Down;
    end Fork;
    
-   Life_Span : constant := 3;    -- In his life a philosopher eats 20 times
+   Life_Span : constant := 3;    -- In his life a philosopher eats l times
    
    task type Person (ID : Integer; First, Second : not null access Fork);
    task body Person is
@@ -43,7 +43,7 @@ procedure Test_Dining_Philosophers is
       Put_Line (Integer'Image (ID) & " is leaving");
    end Person;
 
-   Num_Philosophers : constant := 10; -- Change this to your desired number of philosophers
+   Num_Philosophers : constant := 4; -- Change this to your desired number of philosophers
    Forks : array (1..Num_Philosophers) of aliased Fork; -- Forks for hungry philosophers
    Philosophers : array (1..Num_Philosophers) of access Person;
 begin
