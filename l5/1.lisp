@@ -90,7 +90,7 @@
 (defun main ()
   (format t "~a~%" (binomial 200 5))
   (format t "~a~%" (binomial2 200 5))
-  (format t "~a~%" (mergesort '(4 3 2 1)))
+  (format t "~a~%" (mergesort '(4 2 1 3)))
   (format t "~a~%" (multiple-value-list (de 35 15 5)))
   (format t "~a~%" (prime-factors 100))
   (format t "~a~%" (totient 100))

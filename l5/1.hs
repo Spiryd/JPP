@@ -69,7 +69,7 @@ primes n = filter isPrime [2..n]
 main = do
     print(binomial 200 5)
     print(binomial2 200 5)
-    print(mergesort [4, 3, 2, 1])
+    print(mergesort [4, 2, 1, 3])
     print(de 35 15 5)
     print(primeFactors 100)
     print(totient 100)

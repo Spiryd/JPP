@@ -119,7 +119,7 @@ primes(N, Primes) :-
 test_all :-
     % Test mergesort
     write('Testing mergesort...'), nl,
-    mergesort([4, 2, 5, 3, 1], SortedList),
+    mergesort([4, 2, 1, 3], SortedList),
     write('mergesort([4, 2, 5, 3, 1], SortedList) = '), write(SortedList), nl,
     
     % Test diophantine equation solver
